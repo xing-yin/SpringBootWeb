@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--
+    参见 https://www.jianshu.com/p/9029ebe796c8
+    关键说明：
+    classPathEntry：找到驱动jar包的位置。
+    jdbcConnection：数据库连接的配置。
+    javaModelGenerator：Model生成的位置。
+    sqlMapGenerator: Mapper生成的位置。
+    javaClientGenerator： Dao/Mapper生成的位置。
+    table：需要生成的源数据表名
+    -->
+    <classPathEntry
+            location="/Users/yinxing/.m2/repository/mysql/mysql-connector-java/5.1.41/mysql-connector-java-5.1.41.jar"/>
+    <context id="MysqlTables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="false"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.202.206:3306/label_system?characterEncoding=utf-8"
+                        userId="firefly"
+                        password="ugce3a@bR$AzoP2B"/>
+
+        <javaModelGenerator targetPackage="com.alany.admin.model"
+                            targetProject="src/test/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.alany.admin.mybatis"
+                         targetProject="src/test/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="com.alany.admin.mapper"
+                             targetProject="src/test/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--<table tableName="corpus_data" domainObjectName="CorpusData"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+
+        <table tableName="label" domainObjectName="Label"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>-->
+
+    </context>
+</generatorConfiguration>
