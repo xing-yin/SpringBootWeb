@@ -15,7 +15,7 @@ public interface BaseService<T> extends IService<T> {
      * @param pageSize 每页数量
      * @param status   状态:有效/无效
      * @param property 属性(字段)名
-     * @param keywords 搜索关键词
+     * @param keywords 搜索关键词(用户输入)
      * @param orderBy  排序条件
      * @param sequence 顺序:升序/降序
      * @return
