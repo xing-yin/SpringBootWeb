@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <title>演示</title>
+    <!--
+    功能：二级级联的下拉框设计
+    说明：第一个下拉选择框的选项在页面加载时直接获取所有选项
+         第二个下拉选择框的内容是由第一个选择框触发ajax请求去后端动态获取
+    步骤:1.第一个下拉框增加一个onchange事件触发（onchange="loadLocation()"）
+        2.
+
+
+    备注: $('#inputMeshType').val();              jquery获取页面id的方式
+         $('#message').text(result.message);     jquery获取页面信息回显到页面的方式
+    -->
+</head>
+<body>
+<section>
+
+</section>
+
+<section layout:fragment="content">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form -->
+            <div class="box box-info">
+                <!-- /.box-header -->
+                <!-- form start -->
+
+                <label id="message"></label>
+
+                <form class="form-horizontal">
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">类别</label>
+                            <div class="col-sm-10" style="left:0px">
+                                <select name="meshType" id="inputMeshType" class="form-control" onchange="loadLocation()">
+                                    <th:block th:each="meshType:${meshTypeEnumList}">
+                                        <option th:value="${meshType.code}">
+                                            <span th:text="${meshType.value}"></span>
+                                        </option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" >问题位置</label>
+                            <div class="col-sm-10" style="left:0px">
+                                <select name="location" id="inputLocation" class="form-control">
+                                    <th:block th:each="location:${locationEnumList}">
+                                    <option th:value="${location.code}">
+                                        <span th:text="${location.name}"></span>
+                                    </option>
+                                </th:block>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+            <!-- /.box -->
+
+        </div>
+    </div>
+    <!-- /.row -->
+
+</section>
+
+
+<th:block layout:fragment="extra_js">
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        function loadLocation() {
+            //封装请求参数
+            var param = {};
+            //api中的参数对应meshTypeCode
+            param.meshType = $('#inputMeshType').val();
+
+            //ajax请求数据方法
+            $.ajax({
+                type: "get",
+                url: "/api/problem/location",     //url请求的地址
+                cache: false,  //禁用缓存
+                data: param,  //传入组装的参数
+                dataType: "json",
+                success: function (result) {
+                    // 此处的result后端返回的是一个list列表：格式为[{id: 2, text: "中文别名"},{id: 3, text: "英文别名"}]
+                    console.log(result);
+                    //在加载页面之前需要先清空select option
+                    $('#inputLocation').empty();
+                    //封装返回数据重要
+                        for (var i =0;i<result.length;i++ ){
+                            //根据$('#inputLocation')获取对应的标签，自己拼接页面
+                            var option = "<option value="+result[i].id+">" +result[i].text +"</option>"
+                            $('#inputLocation').append(option)
+                        }
+                }
+            });
+        }
+        $(function(){
+           $("#inputMeshType").trigger('change');
+        });
+
+
+
+        /// todo 练习js用，后面删除
+        var pi_value = Math.PI;
+        var regex = new RegExp();
+
+        function add(a,b) {
+            return a+b;
+        }
+
+        void function a() {
+            alert("1");
+        }
+
+        var sum = function (a,b) {
+            alert(a-b);
+        }
+
+        add(2,3);
+        sum(3,1);
+
+        var a = Infinity;
+
+
+
+        /// todo 删除END
+
+
+        /*]]>*/
+    </script>
+
+</th:block>
+
+</body>
+</html>

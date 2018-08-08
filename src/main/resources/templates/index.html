@@ -1,0 +1,394 @@
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试</title>
+    <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+
+<!-- 例1 -->
+<!--<div id="app">-->
+    <!--&lt;!&ndash;<span>Message:{{message}}</span>&ndash;&gt;-->
+    <!--&lt;!&ndash;<span v-once>这里的值永远不会改变{{message}}</span>&ndash;&gt;-->
+    <!--<p>使用v-html指令<span v-html="message"></span></p>-->
+<!--</div>-->
+
+<!--<script type="text/javascript">-->
+    <!--var app = new Vue({-->
+        <!--el:"#app",-->
+        <!--data:{-->
+            <!--message: "Hello vue!"-->
+        <!--}-->
+    <!--})-->
+<!--</script>-->
+
+<!-- 例2 -->
+<!-- <div id="app-2">
+	<span v-bind:title="message">
+	鼠标悬停此处几秒，可以看到此处动态绑定的 title！
+	</span>
+</div>
+
+<script type="text/javascript">
+var app2 = new Vue({
+	e1:"#app-2",
+	data:{
+		message: "页面加载于" + new Date().toLocaleString()
+	}
+})
+</script> -->
+
+<!-- 例3 -->
+<!-- <div id="app-3">
+  <p v-if="seen">现在你可以看到我</p>
+</div>
+
+<script>
+	var app3 = new Vue({
+  el: '#app-3',
+  data: {
+    seen: false
+  }
+})
+</script>
+ -->
+
+
+
+<!-- <div id="app-4">
+	<ol>
+		<li v-for ="todo in todos">
+			{{todo.text}}
+		</li>
+	</ol>
+
+</div>
+
+<script>
+  var app4 = new Vue({
+  el: '#app-4',
+  data: {
+    todos:[
+    	{text: "文本1"},
+    	{text: "文本2"},
+    	{text: "文本3"}
+    ]
+  }
+})
+</script> -->
+
+<!-- <div id="app-5">
+	<p>{{message}}</p>
+	<button v-on:click="reverseMessage">翻转message</button>
+</div>
+
+<script>
+  var app5 = new Vue({
+  el: '#app-5',
+  data: {
+    message:"Hello Vue"
+  },
+  methods:{
+  	reverseMessage: function(){
+  		this.message = this.message.split('').reverse().join('')
+  	}
+  }
+})
+</script>
+ -->
+
+
+<!-- <div id="app-6">
+	<p>{{message}}</p>
+	<input v-model="message">
+</div>
+
+<script>
+  var app6 = new Vue({
+  el: '#app-6',
+  data: {
+    message:"Hello Vue"
+  }
+})
+</script> -->
+<!-- <div id="app-7">
+	<ol>
+
+      现在我们为每个 todo-item 提供了 todo 对象，
+      其中它的内容是动态的。
+      我们还需要为每个组件提供一个 "key"，
+      这将在之后详细解释。
+
+    <todo-item
+    v-for="item in groceryList"
+    v-bind:todo="item"
+    v-bind:key="item.id">
+    </todo-item>
+	</ol>
+</div> -->
+
+<!-- <script>
+  Vue.component("todo-item",{
+  	props:["todo"],
+  	template:"<li>{{todo.text}}</li>"
+  })
+
+  var app7 = new Vue({
+  	el:"#app-7",
+  	data:{
+  		groceryList:[
+  		{id:0,text:"蔬菜"},
+  		{id:1,text:"奶酪"},
+  		{id:2,text:"其他食物"}
+  	]
+  	}
+  })
+</script>  -->
+
+
+<!-- <div id="app-8">
+  <p>{{visitCount}}</p>
+
+</div>
+
+<script>
+
+// 此对象将会添加到 Vue 实例上
+var vm = new Vue({
+  el:"#app-8",
+  data: {
+  newTodoText: '',
+  visitCount: 0,
+  hideCompletedTodos: false,
+  todos: [],
+  error: null
+}
+})
+
+// // 在实例上获取属性
+// // 将返回原始数据中的属性
+// vm.a == data.a // => true
+
+// // 设置实例上的属性，
+// // 也会影响原始数据
+// vm.a = 2
+// data.a // => 2
+
+// // ... 反之亦然
+// data.a = 3
+// vm.a // => 3
+</script> -->
+
+
+<!-- <div id="app-9">
+ <p>{{foo}}</p>
+ <button v-on:click="foo = 'baz'">点我修改</button>
+</div>
+
+<script>
+  var obj = {
+    foo:"bar"
+  }
+  // Object.freeze(obj)
+
+  new Vue({
+    el: "#app-9",
+    data:obj
+  })
+</script> -->
+
+<!-- <script>
+  var data = {a:1}
+  var vm = new Vue({
+    el: "#example",
+    data:data
+  })
+alert(vm.$watch('a', function(newValue, oldValue){
+
+}))
+vm.$data == data
+vm.$el == document.getElementById("example")
+vm.$watch('a', function(newValue, oldValue){
+
+})
+
+</script> -->
+
+
+<!-- <script>
+  new Vue({
+    data:{
+      a:1
+    },
+    created:function(){
+    console.log("a is :" + this.a)
+  }
+  })
+
+</script> -->
+
+<!--<div v-bind:id="dynamicId"></div>-->
+<!--<button v-bind:disabled="isButtonDisabled">Button</button>-->
+
+<!--<a v-bind:hef="url"></a>-->
+<!--<a v-on:click="doSomething"></a>-->
+
+
+
+<!--<div id="example">-->
+    <!--<p>初始message是:"{{message}}"</p>-->
+    <!--<p>计算后的翻转message是:"{{reverseMessage}}"</p>-->
+<!--</div>-->
+
+<!--<script>-->
+    <!--var vm = new Vue({-->
+        <!--el:"#example",-->
+        <!--data:{-->
+            <!--message:"hello"-->
+        <!--},-->
+        <!--computed:{-->
+            <!--reversedMessage:function () {-->
+                <!--return this.message.split('').reverse().join('')-->
+            <!--}-->
+        <!--}-->
+    <!--})-->
+    <!--console.log(vm.reversedMessage);-->
+    <!--vm.message = "goodboy";-->
+    <!--console.log(vm.reversedMessage);-->
+<!--</script>-->
+
+<!--<script>-->
+    <!--var vm = new Vue({-->
+        <!--el:"#example",-->
+        <!--data:{-->
+            <!--message:"hello"-->
+        <!--},-->
+        <!--methods:{-->
+            <!--reverseMessage: function () {-->
+                <!--return this.message.split('').reverse().join('')-->
+            <!--}-->
+        <!--}-->
+    <!--})-->
+<!--</script>-->
+
+<!--<div id="demo">-->
+    <!--{{fullName}}-->
+<!--</div>-->
+
+<!--<script>-->
+    <!--var vm = new Vue({-->
+        <!--el:"#demo",-->
+        <!--data:{-->
+            <!--firstName:'foo',-->
+            <!--lastName:'bar',-->
+            <!--fullName:'foo bar'-->
+        <!--},-->
+        <!--computed:{-->
+            <!--get: function () {-->
+                <!--return this.firstName + ' ' + this.lastName-->
+            <!--},-->
+            <!--set:function (newValue) {-->
+                <!--var names = newValue.split('')-->
+                <!--this.firstName = names[0]-->
+                <!--this.lastName = names[names.length - 1]-->
+            <!--}-->
+        <!--}-->
+    <!--})-->
+<!--</script>-->
+
+<!--<div id="watch-example">-->
+    <!--<p>-->
+        <!--问一个答案是 yes/no 的问题：-->
+        <!--<input v-model="question">-->
+    <!--</p>-->
+    <!--<p>{{ answer }}</p>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; 对于 ajax 库(ajax libraries)和通用工具方法的集合(collections of general-purpose utility methods)来说， &ndash;&gt;-->
+<!--&lt;!&ndash; 由于已经存在大量与其相关的生态系统， &ndash;&gt;-->
+<!--&lt;!&ndash; 因此 Vue 核心无需重新创造，以保持轻量的文件体积。 &ndash;&gt;-->
+<!--&lt;!&ndash; 同时这也可以使你自由随意地选择自己最熟悉的。 &ndash;&gt;-->
+<!--<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>-->
+<!--<script>-->
+    <!--var watchExampleVM = new Vue({-->
+        <!--el: '#watch-example',-->
+        <!--data: {-->
+            <!--question: '',-->
+            <!--answer: '你要先提出问题，我才能给你答案！'-->
+        <!--},-->
+        <!--watch: {-->
+            <!--// 只要 question 发生改变，此函数就会执行-->
+            <!--question: function (newQuestion, oldQuestion) {-->
+                <!--this.answer = '等待输入停止……'-->
+                <!--this.getAnswer()-->
+            <!--}-->
+        <!--},-->
+        <!--methods: {-->
+            <!--// _.debounce 是由 lodash 提供的函数，-->
+            <!--// 在运行特别消耗性能的操作时，-->
+            <!--// 可以使用 _.debounce 来限制频率。-->
+            <!--// 在下面这种场景中，我们需要限制访问 yesno.wtf/api 的频率，-->
+            <!--// 等到用户输入完毕之后，ajax 请求才会发出。-->
+            <!--// 想要了解更多关于 _.debounce 函数（以及与它类似的 _.throttle）的详细信息，-->
+            <!--// 请访问：https://lodash.com/docs#debounce-->
+
+<!--getAnswer: _.debounce(-->
+<!--function () {-->
+<!--if (this.question.indexOf('？') === -1) {-->
+<!--this.answer = '问题通常需要包含一个中文问号。;-)'-->
+<!--return-->
+<!--}-->
+<!--this.answer = '思考中……'-->
+<!--var vm = this-->
+<!--axios.get('https://yesno.wtf/api')-->
+<!--.then(function (response) {-->
+<!--vm.answer = _.capitalize(response.data.answer)-->
+<!--})-->
+<!--.catch(function (error) {-->
+<!--vm.answer = '错误！API 无法处理。' + error-->
+<!--})-->
+<!--},-->
+<!--// 这是用户停止输入操作后所等待的毫秒数。-->
+<!--// （译者注：500毫秒之内，用户继续输入，则重新计时）-->
+<!--500-->
+<!--)-->
+<!--}-->
+<!--})-->
+<!--</script>-->
+
+<div class="static" id="id1"
+     v-bind:class="{ active: isActive, 'text-danger': hasError }">
+</div>
+
+<script>
+    var vm = new Vue({
+        el: "#id1",
+        data: {
+            isActive: true,
+            hasErros: false
+        }
+    })
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

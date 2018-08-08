@@ -23,9 +23,9 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://192.168.202.206:3306/label_system?characterEncoding=utf-8"
-                        userId="firefly"
-                        password="ugce3a@bR$AzoP2B"/>
+                        connectionURL="jdbc:mysql://localhost:3306/spring_boot_web?characterEncoding=utf-8"
+                        userId="root"
+                        password="123456"/>
 
         <javaModelGenerator targetPackage="com.alany.admin.model"
                             targetProject="src/test/java">
@@ -43,15 +43,10 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <!--<table tableName="corpus_data" domainObjectName="CorpusData"
+        <table tableName="user_action_record" domainObjectName="UserActionRecord"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
-
-        <table tableName="label" domainObjectName="Label"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false"/>-->
 
     </context>
 </generatorConfiguration>
