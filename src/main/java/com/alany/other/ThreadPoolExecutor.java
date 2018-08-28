@@ -8,10 +8,10 @@ import java.util.concurrent.*;
 /**
  * Created by yinxing on 2018/8/8.
  */
-public class Test {
+public class ThreadPoolExecutor {
 
     public static void main(String[] args) throws InterruptedException {
-        ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(6, 10, 30,
+        java.util.concurrent.ThreadPoolExecutor poolExecutor = new java.util.concurrent.ThreadPoolExecutor(6, 10, 30,
                 TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>());
 
         Runnable myRunnable = new Runnable() {
