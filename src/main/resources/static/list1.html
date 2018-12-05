@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<script type="text/javascript" src="iview.min.js"></script>
+
+
+<!--bootstarp的列表页和ajax的示例-->
+
+<head>
+    <title>Mesh Admin</title>
+    <style>
+        .info-href {
+            display: block;width: 100px;white-space: nowrap;overflow: hidden;text-overflow:ellipsis;
+        }
+    </style>
+</head>
+<body>
+
+<section layout:fragment="content-header">
+    <h4>
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li class="active">
+                <small>
+                    <input th:value="${meshTypeName}" readonly="value" style="border: none;width: 70px"/>
+                </small>
+            </li>
+        </ol>
+    </h4>
+</section>
+
+<section layout:fragment="content">
+    <div class="row">
+        <input type="hidden" id="urlType_h" name="urlType" th:value="${urlType}"/>
+        <div class="box-header">
+            <form class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="search_keywords"
+                           name="search_keywords" placeholder="请输入问题内容"/>
+                    <!--<input type="hidden" id="wordType" name="wordType" th:value="1" />-->
+                </div>
+                <div class="form-group">
+                    <label for="status">&nbsp;&nbsp;反馈状态：</label>
+                    <select name="status" id="status" class="form-control" th:maxlength="10">
+                        <option value="-2">&nbsp;待处理&nbsp;</option>
+                        <option value="-1">&nbsp;未处理&nbsp;</option>
+                        <option value="1">&nbsp;已处理&nbsp;</option>
+                        <option value="0">&nbsp;全部&nbsp;</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="orderBy">&nbsp;&nbsp;排序：</label>
+                    <select name="orderBy" id="orderBy" class="form-control" th:maxlength="10">
+                        <option value="feedback_content">&nbsp;内容&nbsp;</option>
+                        <option value="id">&nbsp;ID&nbsp;</option>
+                        <option value="word_id">&nbsp;词条ID&nbsp;</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sequence">&nbsp;&nbsp;方式：</label>
+                    <select name="sequence" id="sequence" class="form-control" th:maxlength="10">
+                        <option value="asc">&nbsp;升序&nbsp;</option>
+                        <option value="desc">&nbsp;降序&nbsp;</option>
+                    </select>
+                </div>
+
+                <button type="button" class="btn btn-primary" id="my-search">查询</button>
+            </form>
+        </div>
+
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <table id="problemTable" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th style="width: 24px">ID</th>
+                            <th style="width: 160px">内容</th>
+                            <th style="width: 20px">词条ID</th>
+                            <th style="width: 180px">名称</th>
+                            <th style="width: 50px">位置</th>
+                            <th style="width: 10px">类型</th>
+                            <th style="width: 40px">信源</th>
+                            <th style="width: 120px">反馈内容</th>
+                            <th style="width: 30px">问题状态</th>
+                            <th style="width: 50px">操作</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+
+        <!-- /.col -->
+    </div>
+</section>
+
+<th:block layout:fragment="extra_js">
+    <script>
+        var type = $('#urlType_h').val();
+
+        $(function () {
+
+            //重要修改 表格内容的自定义，根据业务定制
+            $("#problemTable").DataTable({
+                processing: true,
+                serverSide: true,//开启服务器模式:启用服务器分页
+                lengthChange: true,//是否允许用户改变表格每页显示的记录数
+                paging: true,//是否分页
+                autoWidth: true,  //使用自动调整列宽
+                searching: false,  //禁用原生搜索
+                renderer: "bootstrap",  //渲染样式：Bootstrap和jquery-ui
+                pagingType: "simple_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+                columnDefs: [{
+                    "defaultContent": "-",
+                    "targets": "_all",
+                }],
+                ajax: function (data, callback, settings) {
+                    console.log(data);
+
+                    //封装请求参数
+                    var param = {};
+                    //api中的参数对应
+                    param.pageNo = (data.start / data.length) + 1;//当前页码
+                    param.pageSize = data.length;
+
+                    param.feedbackContent = $('#search_keywords').val();
+                    param.status = $('#status').val();
+                    param.orderBy= $('#orderBy').val();
+                    param.sequence = $('#sequence').val();
+
+                    //ajax请求数据方法
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/problem/"+type+"/filterList",     //url请求的地址
+//                        url: "/api/problem/1/filterList",     //url请求的地址
+                        cache: false,  //禁用缓存
+                        data: param,  //传入组装的参数
+                        dataType: "json",
+                        success: function (result) {
+
+                            console.log(result);
+                            //封装返回数据重要
+                            var returnData = {};
+                            //返回了draw计数器,由后台返回
+                            returnData.draw = data.draw;
+                            //返回数据全部记录
+                            returnData.recordsTotal = result.results.pageBean.totalCount;
+                            //后台不实现过滤功能，每次查询均视作全部结果
+                            returnData.recordsFiltered = result.results.pageBean.totalCount;
+                            //返回的数据列表
+                            returnData.data = result.results.items;
+
+                            //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                            //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                            callback(returnData);
+                        }
+                    });
+                },
+                //列表表头字段
+                columns: [
+                    {"data": "id"},
+                    {
+                        createdCell(td, cellData, item, row, col){
+                            $(td).html(
+                                `<a href="/problem/detail?id=${item.id}">`
+                                + `<span>${item.problemContent}</span>`
+                                + `</a>`
+                            );
+                        }
+                    },
+                    {"data": "wordId"},
+                    {"data": "wordName"},
+                    /*{
+                     createdCell(td, cellData, item, row, col) {
+                     $(td).html(`<tr th:each="item:${locationEnum}">
+                     <td>
+                     <span th:if="${item.code} == problemLocation" th:text="${item.name}"></span>
+                     </td>
+                     </tr>`);
+                     },
+                     },*/
+                    {
+                        // 这个地方做成循环遍历枚举来完成
+                        createdCell(td, cellData, item, row, col) {
+                            if (item.problemLocation == 1) {
+                                $(td).html(`<span> 中文主题词 </span>`);
+                            } else if (item.problemLocation == 2) {
+                                $(td).html(`<span> 中文别名 </span>`);
+                            } else if (item.problemLocation == 3) {
+                                $(td).html(`<span > 英文主题词 </span>`);
+                            } else if (item.problemLocation == 4) {
+                                $(td).html(`<span> 英文别名 </span>`);
+                            } else if (item.problemLocation == 5) {
+                                $(td).html(`<span> 父级 </span>`);
+                            } else if (item.problemLocation == 6) {
+                                $(td).html(`<span> 子级 </span>`);
+                            } else if (item.problemLocation == 7) {
+                                $(td).html(`<span> 相关身体结构 </span>`);
+                            } else if (item.problemLocation == 8) {
+                                $(td).html(`<span> 好发/侵害身体结构 </span>`);
+                            } else if (item.problemLocation == 9) {
+                                $(td).html(`<span> 典型症状 </span>`);
+                            } else if (item.problemLocation == 10) {
+                                $(td).html(`<span> 一般症状 </span>`);
+                            } else if (item.problemLocation == 11) {
+                                $(td).html(`<span> 罕见症状 </span>`);
+                            } else if (item.problemLocation == 12) {
+                                $(td).html(`<span> 合并症 </span>`);
+                            } else if (item.problemLocation == 13) {
+                                $(td).html(`<span> 并发症 </span>`);
+                            } else if (item.problemLocation == 14) {
+                                $(td).html(`<span> 特异性检查 </span>`);
+                            } else if (item.problemLocation == 15) {
+                                $(td).html(`<span> 一般检查 </span>`);
+                            } else if (item.problemLocation == 16) {
+                                $(td).html(`<span> 特异性检验 </span>`);
+                            } else if (item.problemLocation == 17) {
+                                $(td).html(`<span> 一般检验 </span>`);
+                            } else if (item.problemLocation == 18) {
+                                $(td).html(`<span> 手术操作 </span>`);
+                            } else if (item.problemLocation == 19) {
+                                $(td).html(`<span> 非手术治疗 </span>`);
+                            } else if (item.problemLocation == 20) {
+                                $(td).html(`<span> 药物治疗 </span>`);
+                            }
+                        },
+                    },
+                    {
+                        createdCell(td, cellData, item, row, col) {
+                            if (item.problemType == 1) {
+                                $(td).html(`<span> 缺失 </span>`);
+                            } else if (item.problemType == 2) {
+                                $(td).html(`<span> 错位 </span>`);
+                            } else if (item.problemType == 3) {
+                                $(td).html(`<span> 并列 </span>`);
+                            } else if (item.problemType == 4) {
+                                $(td).html(`<span> 错误 </span>`);
+                            } else if (item.problemType == 5) {
+                                $(td).html(`<span> 重复 </span>`);
+                            } else if (item.problemType == 6) {
+                                $(td).html(`<span> 待拆 </span>`);
+                            } else if (item.problemType == 7) {
+                                $(td).html(`<span> 冲突 </span>`);
+                            } else if (item.problemType == 8) {
+                                $(td).html(`<span> 别字 </span>`);
+                            }
+                        },
+                    },
+                    {
+                        createdCell(td, cellData, item, row, col){
+                            $(td).html(
+                                `<span class="info-href"><a href="${item.informationSource}" target="_blank">`
+                                + `${item.informationSource}`
+                                + `</a></span>`
+                            );
+                        }
+                    },
+                    {
+                        createdCell(td, cellData, item, row, col){
+                            $(td).html(
+                                `<input type="text" class="form-control" id="feedbackContent_${item.id}"
+                                    name="feedbackContent" value="${item.feedbackContent}"/>`
+                            );
+                        }
+                    },
+                    {
+                        createdCell(td, cellData, item, row, col) {
+                            if (item.status == -2) {
+                                $(td).html(`<select name="status" id="inputStatus_${item.id}" class="form-control" value="${item.status}">`
+                                    +`<option value="-2" selected="selected">待处理</option>`
+                                   +`<option value="-1">未处理</option>`
+                                   +`<option value="1">已处理</option>`
+                                   +`</select>`
+                                );
+                            } else if (item.status == -1) {
+                                $(td).html(`<select name="status" id="inputStatus_${item.id}" class="form-control" value="${item.status}">`
+                                    +`<option value="-2">待处理</option>`
+                                    +`<option value="-1" selected="selected">未处理</option>`
+                                    +`<option value="1">已处理</option>`
+                                    +`</select>`);
+                            } else {
+                                $(td).html(`<select name="status" id="inputStatus_${item.id}" class="form-control" value="${item.status}">`
+                                   +`<option value="-2">待处理</option>`
+                                   +`<option value="-1">未处理</option>`
+                                   +`<option value="1" selected="selected">已处理</option>`
+                                   +`</select>`);
+                            }
+                        },
+                    },
+                    {
+                        createdCell(td, cellData, item, row, col){
+                            $(td).html(
+                               `<div>`+`<button type="button" class="btn btn-primary btn-sm" name="my-save"  onclick="save('${item.id}')">保存</button>`
+                                + `<button type="button" class="btn btn-danger btn-sm" name="my-save" onclick="deleteById('${item.id}')">删除</button>`+`</div>`
+                            );
+                        }
+                    },
+                ],
+
+            });
+        });
+
+        $('#my-search').click(function () {
+            var search_keywords = $('#search_keywords').val();
+            var table = $('#problemTable').DataTable();
+            table.search(search_keywords).draw();
+        });
+
+        function save(id) {
+
+            var type = $('#urlType_h').val();
+            //封装请求参数
+            var param = {};
+            //api中的参数对应
+            param.id = id;
+            param.feedbackContent = $('#feedbackContent_' + id).val();
+            param.status = $('#inputStatus_' + id).val();
+
+            $.ajax({
+                type: 'POST',
+                data:param,
+                url: "/api/problem/edit",
+            }).then(function (data) {
+                if(data==true){
+                    // alert("保存成功！")
+                    if(type==1){
+                        $("#disease_menu").trigger('click');
+                    }else if (type == 8){
+                        $("#symptom_menu").trigger('click');
+                    }else if (type == 5){
+                        $("#surgery_menu").trigger('click');
+                    }else if (type == 6){
+                        $("#nonSurgery_menu").trigger('click');
+                    }else if (type == 3){
+                        $("#examination_menu").trigger('click');
+                    }else if (type == 4){
+                        $("#inspection_menu").trigger('click');
+                    }else if (type == 2){
+                        $("#anatomy_menu").trigger('click');
+                    }else if (type == 9){
+                        $("#equipment_menu").trigger('click');
+                    }else if (type == 11){
+                        $("#other_menu").trigger('click');
+                    }
+                }else {
+                    alert("保存出错！")
+                }
+            });
+        }
+
+        function deleteById(id) {
+            var type = $('#urlType_h').val();
+            //封装请求参数
+            var param = {};
+            //api中的参数对应
+            param.id = id;
+            var msg = "您确定要删除吗？请确认～";
+            if (confirm(msg) == true) {
+                $.ajax({
+                    type: 'POST',
+                    data: param,
+                    url: "/api/problem/delete",
+                }).then(function (data) {
+                    if (data == true) {
+                        alert("删除成功！")
+                        if (type == 1) {
+                            $("#disease_menu").trigger('click');
+                        }else if (type == 8){
+                            $("#symptom_menu").trigger('click');
+                        }else if (type == 5){
+                            $("#surgery_menu").trigger('click');
+                        }else if (type == 6){
+                            $("#nonSurgery_menu").trigger('click');
+                        }else if (type == 3){
+                            $("#examination_menu").trigger('click');
+                        }else if (type == 4){
+                            $("#inspection_menu").trigger('click');
+                        }else if (type == 2){
+                            $("#anatomy_menu").trigger('click');
+                        }else if (type == 9){
+                            $("#equipment_menu").trigger('click');
+                        }else if (type == 11){
+                            $("#other_menu").trigger('click');
+                        }
+                    } else {
+                        alert("删除出错！")
+                    }
+                });
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    </script>
+</th:block>
+
+
+</body>
+</html>
