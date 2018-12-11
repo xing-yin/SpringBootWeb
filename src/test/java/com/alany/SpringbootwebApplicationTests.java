@@ -32,7 +32,7 @@ public class SpringbootwebApplicationTests {
         message.setSubject("主题：简单邮件");
         message.setText("测试邮件内容");
 
-        mailSender.send(message);
+//        mailSender.send(message);
     }
 
 }

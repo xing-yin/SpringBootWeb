@@ -1,4 +1,4 @@
-//package com.alany.admin.kafka;
+//package com.alany.other.kafka;
 //
 //import com.alibaba.fastjson.JSON;
 //import com.alibaba.fastjson.JSONArray;

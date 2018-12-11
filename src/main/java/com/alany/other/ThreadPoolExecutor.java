@@ -43,7 +43,7 @@ public class ThreadPoolExecutor {
         });
         pool.shutdown();//gracefully shutdown
 
-
+//        不建议这么做
 //        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(15);
 //        fixedThreadPool.execute(new Runnable() {
 //            @Override
