@@ -1,4 +1,4 @@
-package com.alany.common.http;
+package com.alany.other.http.http;
 
 /**
  * Created by yinxing on 2018/7/31.

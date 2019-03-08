@@ -1,4 +1,4 @@
-package com.alany.common.http;
+package com.alany.other.http.http;
 
 import org.apache.http.*;
 import org.apache.http.client.HttpRequestRetryHandler;
