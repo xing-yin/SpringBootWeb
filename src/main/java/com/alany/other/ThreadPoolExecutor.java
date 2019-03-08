@@ -1,7 +1,7 @@
 package com.alany.other;
 
-import com.alany.common.http.HttpClientUtil;
-import com.alany.common.http.HttpConstants;
+import com.alany.other.http.http.HttpClientUtil;
+import com.alany.other.http.http.HttpConstants;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
