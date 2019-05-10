@@ -88,6 +88,7 @@ public class HttpClientUtil {
         httpClientConnectionManager.setMaxTotal(100);
         httpClientConnectionManager.setDefaultMaxPerRoute(20);
         HttpRequestRetryHandler httpRequestRetryHandler = new HttpRequestRetryHandler() {
+            @Override
             public boolean retryRequest(IOException exception, int executionCount, HttpContext context) {
                 if (executionCount >= 5) {
                     return false;
@@ -114,20 +115,20 @@ public class HttpClientUtil {
         return httpClient;
     }
 
-    private static void setRequestConfig(HttpRequestBase httpRequestBase, HttpConstants.HttpClientConfig httpClientConfig) {
+    private static void setRequestConfig(HttpRequestBase httpRequestBase, HttpClientConfig httpClientConfig) {
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(httpClientConfig.getConnectTimeout()).setConnectionRequestTimeout(httpClientConfig.getConnectionRequestTimeout()).setSocketTimeout(httpClientConfig.getSocketTimeout()).build();
         httpRequestBase.setConfig(requestConfig);
     }
 
     public static HttpResult doGet(String url) {
-        return doGet(url, (Map) null, HttpConstants.HttpClientConfig.DEFAULT);
+        return doGet(url, (Map) null, HttpConstants.DEFAULT);
     }
 
-    public static HttpResult doGet(String url, HttpConstants.HttpClientConfig httpClientConfig) {
+    public static HttpResult doGet(String url, HttpClientConfig httpClientConfig) {
         return doGet(url, (Map) null, httpClientConfig);
     }
 
-    public static HttpResult doGet(String url, Map<String, Object> params, HttpConstants.HttpClientConfig httpClientConfig) {
+    public static HttpResult doGet(String url, Map<String, Object> params, HttpClientConfig httpClientConfig) {
         try {
             URIBuilder uriBuilder = new URIBuilder(url);
             if (params != null) {
@@ -155,14 +156,14 @@ public class HttpClientUtil {
     }
 
     public static HttpResult doPost(String url) {
-        return doPost(url, (Map) null, HttpConstants.HttpClientConfig.DEFAULT);
+        return doPost(url, (Map) null, HttpConstants.DEFAULT);
     }
 
-    public static HttpResult doPost(String url, HttpConstants.HttpClientConfig httpClientConfig) {
+    public static HttpResult doPost(String url, HttpClientConfig httpClientConfig) {
         return doPost(url, (Map) null, httpClientConfig);
     }
 
-    public static HttpResult doPost(String url, Map<String, Object> params, HttpConstants.HttpClientConfig httpClientConfig) {
+    public static HttpResult doPost(String url, Map<String, Object> params, HttpClientConfig httpClientConfig) {
         HttpPost httpPost = new HttpPost(url);
         setRequestConfig(httpPost, httpClientConfig);
         setPostParams(httpPost, params);
@@ -180,7 +181,7 @@ public class HttpClientUtil {
         }
     }
 
-    public static HttpResult doPostBody(String url, String bodyJson, HttpConstants.HttpClientConfig httpClientConfig) {
+    public static HttpResult doPostBody(String url, String bodyJson, HttpClientConfig httpClientConfig) {
         HttpPost httpPost = new HttpPost(url);
         setRequestConfig(httpPost, httpClientConfig);
 
