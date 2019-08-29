@@ -35,7 +35,7 @@ public class ThreadPoolExecutor {
             @Override
             public void run() {
                 try {
-                    HttpClientUtil.doGet(url, stringMap, HttpConstants.HttpClientConfig.DEFAULT);
+                    HttpClientUtil.doGet(url, stringMap, HttpConstants.DEFAULT);
                 } catch (Exception e) {
                     logger.info("http上报solr失败！");
                 }

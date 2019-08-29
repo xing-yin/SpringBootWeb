@@ -63,7 +63,7 @@ public class SysUserServiceImpl implements SysUserService {
 
         SysUser sysUser = null;
         try {
-            HttpResult result = HttpClientUtil.doPost(getUserUrl, params, HttpConstants.HttpClientConfig.DEFAULT);
+            HttpResult result = HttpClientUtil.doPost(getUserUrl, params, HttpConstants.DEFAULT);
             JSONObject resultJson = JSON.parseObject(result.getBody());
             if (resultJson.getBooleanValue("success")) {
                 JSONObject data = resultJson.getJSONObject("data");
@@ -89,7 +89,7 @@ public class SysUserServiceImpl implements SysUserService {
             Map<String, Object> params = new HashMap<>();
             params.put("username", username);
             params.put("platform", platform);
-            HttpResult result = HttpClientUtil.doPost(getRolesUrl, params, HttpConstants.HttpClientConfig.DEFAULT);
+            HttpResult result = HttpClientUtil.doPost(getRolesUrl, params, HttpConstants.DEFAULT);
             JSONObject resultJson = JSON.parseObject(result.getBody());
             if (resultJson.getBooleanValue("success")) {
                 JSONArray permissionArray = resultJson.getJSONArray("data");
