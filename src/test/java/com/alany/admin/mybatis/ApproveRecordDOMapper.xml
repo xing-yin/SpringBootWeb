@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.alany.admin.mapper.ApproveRecordDOMapper" >
+  <resultMap id="BaseResultMap" type="com.alany.admin.model.ApproveRecordDO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="application_list_id" property="applicationListId" jdbcType="INTEGER" />
+    <result column="approver_name" property="approverName" jdbcType="VARCHAR" />
+    <result column="step" property="step" jdbcType="SMALLINT" />
+    <result column="approve_note" property="approveNote" jdbcType="VARCHAR" />
+    <result column="approve_time" property="approveTime" jdbcType="TIMESTAMP" />
+    <result column="approve_status" property="approveStatus" jdbcType="TINYINT" />
+    <result column="pass_right_id" property="passRightId" jdbcType="VARCHAR" />
+    <result column="reject_right_id" property="rejectRightId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, application_list_id, approver_name, step, approve_note, approve_time, approve_status, 
+    pass_right_id, reject_right_id, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from approve_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from approve_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.alany.admin.model.ApproveRecordDO" >
+    insert into approve_record (id, application_list_id, approver_name, 
+      step, approve_note, approve_time, 
+      approve_status, pass_right_id, reject_right_id, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{applicationListId,jdbcType=INTEGER}, #{approverName,jdbcType=VARCHAR}, 
+      #{step,jdbcType=SMALLINT}, #{approveNote,jdbcType=VARCHAR}, #{approveTime,jdbcType=TIMESTAMP}, 
+      #{approveStatus,jdbcType=TINYINT}, #{passRightId,jdbcType=VARCHAR}, #{rejectRightId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.alany.admin.model.ApproveRecordDO" >
+    insert into approve_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="applicationListId != null" >
+        application_list_id,
+      </if>
+      <if test="approverName != null" >
+        approver_name,
+      </if>
+      <if test="step != null" >
+        step,
+      </if>
+      <if test="approveNote != null" >
+        approve_note,
+      </if>
+      <if test="approveTime != null" >
+        approve_time,
+      </if>
+      <if test="approveStatus != null" >
+        approve_status,
+      </if>
+      <if test="passRightId != null" >
+        pass_right_id,
+      </if>
+      <if test="rejectRightId != null" >
+        reject_right_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="applicationListId != null" >
+        #{applicationListId,jdbcType=INTEGER},
+      </if>
+      <if test="approverName != null" >
+        #{approverName,jdbcType=VARCHAR},
+      </if>
+      <if test="step != null" >
+        #{step,jdbcType=SMALLINT},
+      </if>
+      <if test="approveNote != null" >
+        #{approveNote,jdbcType=VARCHAR},
+      </if>
+      <if test="approveTime != null" >
+        #{approveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approveStatus != null" >
+        #{approveStatus,jdbcType=TINYINT},
+      </if>
+      <if test="passRightId != null" >
+        #{passRightId,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectRightId != null" >
+        #{rejectRightId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.alany.admin.model.ApproveRecordDO" >
+    update approve_record
+    <set >
+      <if test="applicationListId != null" >
+        application_list_id = #{applicationListId,jdbcType=INTEGER},
+      </if>
+      <if test="approverName != null" >
+        approver_name = #{approverName,jdbcType=VARCHAR},
+      </if>
+      <if test="step != null" >
+        step = #{step,jdbcType=SMALLINT},
+      </if>
+      <if test="approveNote != null" >
+        approve_note = #{approveNote,jdbcType=VARCHAR},
+      </if>
+      <if test="approveTime != null" >
+        approve_time = #{approveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approveStatus != null" >
+        approve_status = #{approveStatus,jdbcType=TINYINT},
+      </if>
+      <if test="passRightId != null" >
+        pass_right_id = #{passRightId,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectRightId != null" >
+        reject_right_id = #{rejectRightId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.alany.admin.model.ApproveRecordDO" >
+    update approve_record
+    set application_list_id = #{applicationListId,jdbcType=INTEGER},
+      approver_name = #{approverName,jdbcType=VARCHAR},
+      step = #{step,jdbcType=SMALLINT},
+      approve_note = #{approveNote,jdbcType=VARCHAR},
+      approve_time = #{approveTime,jdbcType=TIMESTAMP},
+      approve_status = #{approveStatus,jdbcType=TINYINT},
+      pass_right_id = #{passRightId,jdbcType=VARCHAR},
+      reject_right_id = #{rejectRightId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

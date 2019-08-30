@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.alany.admin.mapper.ApproverConfigDOMapper" >
+  <resultMap id="BaseResultMap" type="com.alany.admin.model.ApproverConfigDO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="platform" property="platform" jdbcType="SMALLINT" />
+    <result column="step" property="step" jdbcType="SMALLINT" />
+    <result column="approver_name" property="approverName" jdbcType="VARCHAR" />
+    <result column="item_status" property="itemStatus" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, platform, step, approver_name, item_status, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from approver_config
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from approver_config
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.alany.admin.model.ApproverConfigDO" >
+    insert into approver_config (id, platform, step, 
+      approver_name, item_status, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{platform,jdbcType=SMALLINT}, #{step,jdbcType=SMALLINT}, 
+      #{approverName,jdbcType=VARCHAR}, #{itemStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.alany.admin.model.ApproverConfigDO" >
+    insert into approver_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="platform != null" >
+        platform,
+      </if>
+      <if test="step != null" >
+        step,
+      </if>
+      <if test="approverName != null" >
+        approver_name,
+      </if>
+      <if test="itemStatus != null" >
+        item_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="platform != null" >
+        #{platform,jdbcType=SMALLINT},
+      </if>
+      <if test="step != null" >
+        #{step,jdbcType=SMALLINT},
+      </if>
+      <if test="approverName != null" >
+        #{approverName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemStatus != null" >
+        #{itemStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.alany.admin.model.ApproverConfigDO" >
+    update approver_config
+    <set >
+      <if test="platform != null" >
+        platform = #{platform,jdbcType=SMALLINT},
+      </if>
+      <if test="step != null" >
+        step = #{step,jdbcType=SMALLINT},
+      </if>
+      <if test="approverName != null" >
+        approver_name = #{approverName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemStatus != null" >
+        item_status = #{itemStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.alany.admin.model.ApproverConfigDO" >
+    update approver_config
+    set platform = #{platform,jdbcType=SMALLINT},
+      step = #{step,jdbcType=SMALLINT},
+      approver_name = #{approverName,jdbcType=VARCHAR},
+      item_status = #{itemStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

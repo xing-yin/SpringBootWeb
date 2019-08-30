@@ -2,12 +2,15 @@ package com.alany.other.unittest;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Map;
+import java.util.regex.Matcher;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -77,6 +80,20 @@ public class PracticeTest {
         assertEquals(spyList.get(1), "two");
         // 对 spyList.size() 方法进行定制
         assertEquals(spyList.size(), 100);
+    }
+
+    @Test
+    public void testMap(){
+        Map mock = Mockito.mock(Map.class);
+        when(mock.get("city")).thenReturn("bj");
+        System.out.println(mock.get("city"));
+        // 关注参数是否传入
+        verify(mock).get("city");
+//        verify(mock,times(2));
+//        ArgumentCaptor<Map> captor = ArgumentCaptor.forClass(Map.class);
+//        verify(mock).get(captor.capture());
+//        Map newMap= captor.getValue();
+//        assertEquals("bj",newMap.get("city"));
     }
 
 }
