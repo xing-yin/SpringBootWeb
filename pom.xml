@@ -37,12 +37,6 @@
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
         <!--mybatis + mybatis-plus-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -53,6 +47,12 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus</artifactId>
             <version>2.0.5</version>
+        </dependency>
+        <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <!--thymeleaf-->
@@ -223,11 +223,11 @@
             <artifactId>java-jwt</artifactId>
             <version>3.2.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session</artifactId>
-        </dependency>
+        <!--spring-session-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.session</groupId>-->
+            <!--<artifactId>spring-session</artifactId>-->
+        <!--</dependency>-->
         <!--mockito-->
         <dependency>
             <groupId>org.mockito</groupId>
