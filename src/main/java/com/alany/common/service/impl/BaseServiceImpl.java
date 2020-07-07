@@ -1,10 +1,12 @@
 package com.alany.common.service.impl;
 
 import com.alany.common.service.BaseService;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -17,28 +19,29 @@ import java.util.List;
 public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements BaseService<T> {
 
     @Override
-    public Page<T> selectByPage(int pageNo,
-                                int pageSize,
-                                Integer status,
-                                String property,
-                                String keywords,
-                                String orderBy,
-                                String sequence) {
-        Page<T> page = new Page<>(pageNo, pageSize);
-        page.setOptimizeCount(true);
+    public IPage<T> selectByPage(int pageNo,
+                                 int pageSize,
+                                 Integer status,
+                                 String property,
+                                 String keywords,
+                                 String orderBy,
+                                 String sequence) {
+        IPage<T> page = new Page<T>(pageNo, pageSize) {
+        };
 
-        EntityWrapper ew = new EntityWrapper();
+        QueryWrapper ew = new QueryWrapper();
         setSearchCondition(ew, status, property, keywords);
         setOderByCondition(ew, orderBy, sequence);
 
-        List<T> list = baseMapper.selectPage(page, ew);
+        IPage<T> iPage = baseMapper.selectPage(page, ew);
+        List<T> list = iPage.getRecords();
         page.setTotal(totalCount(status, property, keywords));
         page.setRecords(list);
         return page;
     }
 
     private int totalCount(Integer status, String property, String keywords) {
-        EntityWrapper ew = new EntityWrapper();
+        QueryWrapper ew = new QueryWrapper();
         setSearchCondition(ew, status, property, keywords);
         return baseMapper.selectCount(ew);
     }
@@ -51,7 +54,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
      * @param property
      * @param keywords
      */
-    private void setSearchCondition(EntityWrapper ew,
+    private void setSearchCondition(QueryWrapper ew,
                                     Integer status,
                                     String property,
                                     String keywords) {
@@ -70,11 +73,11 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
      * @param orderBy
      * @param sequence 升序/倒序
      */
-    private void setOderByCondition(EntityWrapper ew, String orderBy, String sequence) {
+    private void setOderByCondition(QueryWrapper ew, String orderBy, String sequence) {
         if (StringUtils.isNotBlank(orderBy) && sequence.equals("asc")) {
-            ew.orderBy(orderBy, true);
+            ew.orderBy(true, true, orderBy);
         } else {
-            ew.orderBy(orderBy, false);
+            ew.orderBy(true, false, orderBy);
         }
     }
 

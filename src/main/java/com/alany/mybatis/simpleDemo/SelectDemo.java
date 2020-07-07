@@ -40,8 +40,8 @@ public class SelectDemo {
              */
             Map<String, Object> params = new HashMap<>();
             params.put("id", 2);
-            List<Person> personList1 = sqlSession.selectList("com.alany.mybatis.simpleDemo.PersonMapper.java.findListById", params);
-            List<Person> personList2 = sqlSession.selectList("com.alany.mybatis.simpleDemo.PersonMapper.java.findListById");
+            List<Person> personList1 = sqlSession.selectList("com.alany.mybatis.simpleDemo.Person1Mapper.java.findListById", params);
+            List<Person> personList2 = sqlSession.selectList("com.alany.mybatis.simpleDemo.Person1Mapper.java.findListById");
             sqlSession.commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());

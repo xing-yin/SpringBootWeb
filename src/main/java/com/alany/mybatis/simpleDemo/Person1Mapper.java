@@ -9,7 +9,7 @@ import java.util.List;
  * @date 2019/8/28
  */
 @Mapper
-public interface PersonMapper {
+public interface Person1Mapper {
 
     List<Person> findListById(Integer id);
 

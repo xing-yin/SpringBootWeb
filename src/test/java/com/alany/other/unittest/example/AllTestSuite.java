@@ -1,5 +1,7 @@
-package com.alany.other.unittest;
+package com.alany.other.unittest.example;
 
+import com.alany.other.unittest.PersonDOServiceImplTest;
+import com.alany.other.unittest.PracticeTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -10,9 +12,10 @@ import org.junit.runners.Suite;
  * @author yinxing
  * @date 2019/8/29
  */
-
+// 1. 更改测试运行方式为 Suite
 @RunWith(Suite.class)
-@Suite.SuiteClasses({MockTest.class, PersonServiceTest.class, PracticeTest.class})
+// 2. 将测试类传入进来
+@Suite.SuiteClasses({JunitTest.class, PersonDOServiceImplTest.class, PracticeTest.class})
 public class AllTestSuite {
 
 

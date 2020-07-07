@@ -1,7 +1,8 @@
 package com.alany.common.service;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.IService;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * Created by yinxing on 2018/6/22.
@@ -20,12 +21,12 @@ public interface BaseService<T> extends IService<T> {
      * @param sequence 顺序:升序/降序
      * @return
      */
-    Page<T> selectByPage(int pageNo,
-                         int pageSize,
-                         Integer status,
-                         String property,
-                         String keywords,
-                         String orderBy,
-                         String sequence);
+    IPage<T> selectByPage(int pageNo,
+                          int pageSize,
+                          Integer status,
+                          String property,
+                          String keywords,
+                          String orderBy,
+                          String sequence);
 
 }

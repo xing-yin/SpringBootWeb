@@ -12,7 +12,7 @@ public interface PersonDao {
 
     Person getPersonById(Integer id);
 
-    @Select("update *g")
+
     void updatePerson(Person person);
 
 }

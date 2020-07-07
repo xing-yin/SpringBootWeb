@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 /**

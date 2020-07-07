@@ -1,4 +1,4 @@
-package com.alany.admin.domain;
+package com.alany.admin.entity;
 
 import lombok.Builder;
 

@@ -1,15 +1,17 @@
-package com.alany.other.unittest;
+package com.alany.other.unittest.example;
 
 import org.junit.*;
 
+import java.util.concurrent.TimeUnit;
+
 /**
- * junit 单元测试 常用注解
+ * junit 单元测试常用注解
  *
  * @author yinxing
  * @date 2019/8/28
  */
 
-public class MockTest {
+public class JunitTest {
 
     /**
      * 针对所有测试，也就是整个测试类中，在所有测试方法执行前，都会先执行由它注解的方法，而且只执行一次。
@@ -20,11 +22,17 @@ public class MockTest {
         System.out.println("beforeClass");
     }
 
+    /**
+     * 初始化方法，执行当前测试类的每个测试方法前执行
+     */
     @Before
     public void setUp() {
         System.out.println("before");
     }
 
+    /**
+     * 测试方法，在这里可以测试期望异常和超时时间
+     */
     @Test
     public void testMethod1() {
         System.out.println("testMethod1");
@@ -34,7 +42,9 @@ public class MockTest {
      * 测试期望超时时间
      */
     @Test(timeout = 1000)
-    public void testMethod2() {
+    public void testMethod2() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(2);
+        System.out.println("complete");
     }
 
     /**
@@ -63,6 +73,7 @@ public class MockTest {
         System.out.println("afterClass");
     }
 
+
     /**
      * setUpClass()、tearDownClass()、setUp()、tearDown()称为测试夹具（Fixture），
      * 就是测试运行程序（test runner）在运行测试方法之前进行初始化、或之后进行回收资源的工作。
@@ -76,5 +87,13 @@ public class MockTest {
      * <p></p>
      * 另外，不需要在超类中显式调用初始化和清除方法，只要它们不被覆盖，测试运行程序将根据需要自动调用这些方法。
      * 超类中的@Before方法在子类的@Before方法之前调用（与构造函数调用顺序一致），@After方法是子类在超类之前运行。
+     */
+
+    /**
+     * 一个单元测试类执行顺序为：
+     * @BeforeClass –> @Before –> @Test –> @After –> @AfterClass
+     *
+     * 每一个测试方法的调用顺序为：
+     *  @Before –> @Test –> @After
      */
 }
